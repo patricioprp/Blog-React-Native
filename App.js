@@ -5,7 +5,7 @@ import IndexScreen from './src/screens/IndexScreen';
 import { BlogProvider } from './src/context/BlogContext';
 
 const navigator = createStackNavigator({
-  Index: IndexScreen
+  Index: IndexScreen//traemos esa pantalla
 },{
   initialRouteName:'Index',
   defaultNavigationOptions:{
