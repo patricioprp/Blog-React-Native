@@ -1,11 +1,24 @@
-import React, {useContext} from 'react';
-import { View, Text, StyleSheet, FlatList, Button, TouchableOpacity } from 'react-native';
+import React, {useContext,useEffect} from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
 import {Context} from '../context/BlogContext';
 import { AntDesign } from '@expo/vector-icons'; 
 import { Feather } from '@expo/vector-icons';
 
 const IndexScreen = ({navigation}) => {
-    const { state, deleteBlogPost }= useContext(Context);
+    const { state, deleteBlogPost, getBlogPost }= useContext(Context);
+    //para evitar que se recargue constantemente el componente y se produzca el bucle infinito
+    useEffect( () => {
+        getBlogPost();//esto se ejecuta una sola vez por eso es necesario usar addListener
+        //una vez creado el post, regresa al index pero no se muestra el post creado, no se actualiza, lo resolveremos asi:
+       const listener = navigation.addListener('didFocus',() => {
+            //lo que hace addListener es que cuando se carga el componente actual, index se ejecuta getBlogPost
+            getBlogPost();
+        });
+
+        return () => {
+            listener.remove();//este es para hacer una limpieda del componente cuando salimos del mismo
+        }
+    },[]);
      return(
          <View>
              <FlatList 

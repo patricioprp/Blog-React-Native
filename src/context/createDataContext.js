@@ -15,7 +15,9 @@ export default (reducer,actions,initialState) => {
         boundActions[key] = actions[key](dispatch);
     }
 
-    return<Context.Provider value={{ state,...boundActions }}>
+    //boundActions pasa todos los actions addBlogPost, editBlogPost etc
+
+    return<Context.Provider value={{ state,...boundActions }}> 
         {children}
     </Context.Provider>
      } 
